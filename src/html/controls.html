@@ -16,6 +16,18 @@
 	
 	<p><label for = "control-depth">Depth:</label><input id = 'control-depth' type = 'number' ng-model = "controls.depth" /></p>
 	
-	<p><label for = "control-color">Color:</label><input id = 'control-color' type = 'text' maxLength="6" ng-model = "controls.color" /></p>
+	<p>
+		<label for = "control-material">Material:</label>
+		
+		<select id = 'control-material' type = 'number' ng-model = "controls.material_index">
+			
+			<option ng-repeat = 'material in materials' ng-selected="$index==controls.material_index" value="{{$index}}">
+		        {{material.name}}
+		    </opzion>
+			
+		</select>
+		
+		<!--  -->
+	</p>
 	
 </section>

@@ -17,19 +17,13 @@ angular.module("MakerJS", [])
 		template: "<div class = 'side' ng-style = 'style'></div>",
 		controller: function($scope, $element, $filter) {
 
-			$scope.$watch('controls.width', function() {
-				update();
-			});
-			
-			$scope.$watch('controls.height', function() {
-				update();
-			});
-			
-			$scope.$watch('controls.depth', function() {
+			$scope.$watchGroup(['shape.width', 'shape.height', 'shape.depth', 'shape.material'], function() {
 				update();
 			});
 			
 			var update = function() {
+				
+				//console.log($scope.controls.material);
 				
 				var base = {
 					width: '100%',
@@ -37,7 +31,7 @@ angular.module("MakerJS", [])
 					left: 'auto',
 					top: 'auto',
 					bottom: '0',
-					background: '#' + $scope.controls.color,
+					background: '#' + $scope.shape.material.color,
 					rotateX: 0,
 					rotateY: 0,
 					rotateZ: 0,
@@ -52,46 +46,46 @@ angular.module("MakerJS", [])
 						switch($scope.index) {
 							
 							case 0: //front
-								base.width = $scope.controls.width + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, 20);
-								base.translateZ = $scope.controls.depth/2;
+								base.width = $scope.shape.width + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, 20);
+								base.translateZ = $scope.shape.depth/2;
 								break;
 							case 1: //back
-								base.width = $scope.controls.width + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, 20);
+								base.width = $scope.shape.width + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, 20);
 								base.rotateX = -180;
 								base.rotateZ = 180;
-								base.translateZ = $scope.controls.depth/2;
+								base.translateZ = $scope.shape.depth/2;
 								break;
 							case 2: //right
-								base.left = ($scope.controls.width - $scope.controls.depth)/2 + 'px';
-								base.width = $scope.controls.depth + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, -20);
+								base.left = ($scope.shape.width - $scope.shape.depth)/2 + 'px';
+								base.width = $scope.shape.depth + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, -20);
 								base.rotateY = 90;
-								base.translateZ = $scope.controls.width/2;
+								base.translateZ = $scope.shape.width/2;
 								break;
 							case 3: //left
-								base.left = ($scope.controls.width - $scope.controls.depth)/2 + 'px';
-								base.width = $scope.controls.depth + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, -20);
+								base.left = ($scope.shape.width - $scope.shape.depth)/2 + 'px';
+								base.width = $scope.shape.depth + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, -20);
 								base.rotateY = -90;
-								base.translateZ = $scope.controls.width/2;
+								base.translateZ = $scope.shape.width/2;
 								break;
 							case 4: //top
-								base.top = ($scope.controls.height - $scope.controls.depth)/2 + 'px';
-								base.height = $scope.controls.depth + 'px';
+								base.top = ($scope.shape.height - $scope.shape.depth)/2 + 'px';
+								base.height = $scope.shape.depth + 'px';
 								base.rotateX = 90;
-								base.translateZ = $scope.controls.height/2;
+								base.translateZ = $scope.shape.height/2;
 								break;
 							case 5: //bottom
-								base.bottom = ($scope.controls.height - $scope.controls.depth)/2 + 'px';
-								base.height = $scope.controls.depth + 'px';
+								base.bottom = ($scope.shape.height - $scope.shape.depth)/2 + 'px';
+								base.height = $scope.shape.depth + 'px';
 								base.rotateX = -90;
-								base.translateZ = $scope.controls.height/2;
+								base.translateZ = $scope.shape.height/2;
 								break;
 						}
 						break;
@@ -127,7 +121,7 @@ angular.module("MakerJS", [])
 		template: "<div ng-style = 'style' ng-click = 'select(shape);'><make-shape-side index = '$index' shape = 'shape' controls = 'controls' ng-repeat = 'side in sides'></make-shape-side></div>",
 		controller: function($scope, $element) {
 
-			$scope.$watchGroup(['controls.width', 'controls.height', 'controls.perspective.x', 'controls.perspective.y', 'controls.perspective.z'], function() {
+			$scope.$watchGroup(['shape.width', 'shape.height', 'controls.perspective.x', 'controls.perspective.y', 'controls.perspective.z'], function() {
 				update();
 			});
 			
@@ -152,10 +146,10 @@ angular.module("MakerJS", [])
 					position: 'absolute',
 					left: '50%',
 					top: '50%',
-					marginTop: -$scope.controls.height/2 + 'px',
-					marginLeft: -$scope.controls.width/2 + 'px',
-					width: $scope.controls.width + 'px',
-					height: $scope.controls.height + 'px',
+					marginTop: -$scope.shape.height/2 + 'px',
+					marginLeft: -$scope.shape.width/2 + 'px',
+					width: $scope.shape.width + 'px',
+					height: $scope.shape.height + 'px',
 					webkitTransform: 'rotateX(' + $scope.controls.perspective.x + 'deg) rotateY(' + $scope.controls.perspective.y + 'deg) rotateZ(' + $scope.controls.perspective.z + 'deg)'
 				}
 				
@@ -164,16 +158,35 @@ angular.module("MakerJS", [])
 		}
 	}
 })
+.factory('Material', [function() {
+	
+	//constructor
+	var Material = function(id, name, color) {
+		this.id = id;
+		this.name = name;
+		this.color = color;
+	}
+	
+	//public methods
+	Material.prototype = {
+		
+		
+		
+	}
+	
+	return Material;
+	
+}])
 .factory('Shape', [function() {
 	
 	//constructor
-	var Shape = function(id, type, width, depth, height, color) {
+	var Shape = function(id, type, width, depth, height, material) {
 		this.id = id;
 		this.type = type;
 		this.width = width;
 		this.depth = depth;
 		this.height = height;
-		this.color = color;
+		this.material = material;
 	}
 	
 	//public methods

@@ -11,19 +11,13 @@
 		template: "<div class = 'side' ng-style = 'style'></div>",
 		controller: function($scope, $element, $filter) {
 
-			$scope.$watch('controls.width', function() {
-				update();
-			});
-			
-			$scope.$watch('controls.height', function() {
-				update();
-			});
-			
-			$scope.$watch('controls.depth', function() {
+			$scope.$watchGroup(['shape.width', 'shape.height', 'shape.depth', 'shape.material'], function() {
 				update();
 			});
 			
 			var update = function() {
+				
+				//console.log($scope.controls.material);
 				
 				var base = {
 					width: '100%',
@@ -31,7 +25,7 @@
 					left: 'auto',
 					top: 'auto',
 					bottom: '0',
-					background: '#' + $scope.controls.color,
+					background: '#' + $scope.shape.material.color,
 					rotateX: 0,
 					rotateY: 0,
 					rotateZ: 0,
@@ -46,46 +40,46 @@
 						switch($scope.index) {
 							
 							case 0: //front
-								base.width = $scope.controls.width + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, 20);
-								base.translateZ = $scope.controls.depth/2;
+								base.width = $scope.shape.width + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, 20);
+								base.translateZ = $scope.shape.depth/2;
 								break;
 							case 1: //back
-								base.width = $scope.controls.width + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, 20);
+								base.width = $scope.shape.width + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, 20);
 								base.rotateX = -180;
 								base.rotateZ = 180;
-								base.translateZ = $scope.controls.depth/2;
+								base.translateZ = $scope.shape.depth/2;
 								break;
 							case 2: //right
-								base.left = ($scope.controls.width - $scope.controls.depth)/2 + 'px';
-								base.width = $scope.controls.depth + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, -20);
+								base.left = ($scope.shape.width - $scope.shape.depth)/2 + 'px';
+								base.width = $scope.shape.depth + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, -20);
 								base.rotateY = 90;
-								base.translateZ = $scope.controls.width/2;
+								base.translateZ = $scope.shape.width/2;
 								break;
 							case 3: //left
-								base.left = ($scope.controls.width - $scope.controls.depth)/2 + 'px';
-								base.width = $scope.controls.depth + 'px';
-								base.height = $scope.controls.height + 'px';
-								base.background = $filter('tintcolor')('#' + $scope.controls.color, -20);
+								base.left = ($scope.shape.width - $scope.shape.depth)/2 + 'px';
+								base.width = $scope.shape.depth + 'px';
+								base.height = $scope.shape.height + 'px';
+								base.background = $filter('tintcolor')('#' + $scope.shape.material.color, -20);
 								base.rotateY = -90;
-								base.translateZ = $scope.controls.width/2;
+								base.translateZ = $scope.shape.width/2;
 								break;
 							case 4: //top
-								base.top = ($scope.controls.height - $scope.controls.depth)/2 + 'px';
-								base.height = $scope.controls.depth + 'px';
+								base.top = ($scope.shape.height - $scope.shape.depth)/2 + 'px';
+								base.height = $scope.shape.depth + 'px';
 								base.rotateX = 90;
-								base.translateZ = $scope.controls.height/2;
+								base.translateZ = $scope.shape.height/2;
 								break;
 							case 5: //bottom
-								base.bottom = ($scope.controls.height - $scope.controls.depth)/2 + 'px';
-								base.height = $scope.controls.depth + 'px';
+								base.bottom = ($scope.shape.height - $scope.shape.depth)/2 + 'px';
+								base.height = $scope.shape.depth + 'px';
 								base.rotateX = -90;
-								base.translateZ = $scope.controls.height/2;
+								base.translateZ = $scope.shape.height/2;
 								break;
 						}
 						break;
