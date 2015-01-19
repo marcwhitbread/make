@@ -1,0 +1,63 @@
+#canvas {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 330px;
+	bottom: 0;
+	background: #fff;
+}
+
+.compass {
+	transform-style: preserve-3d;
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 51px;
+	height: 51px;
+	
+	.axis {
+		position: absolute;
+		background: #000;
+		
+		@size: 16px;
+
+		span {
+			display: block;
+			position: absolute;
+			left: -@size;
+			top: -(@size - 1)/2;
+			width: @size;
+			height: @size;
+			
+			font-family: Helvetica, Arial, sans-serif;
+			font-weight: 700;
+			color: #000;
+			font-size: @size - 2;
+			line-height: @size;
+			text-align: center;
+		}
+		
+		&:nth-child(1) {
+			width: 100%;
+			height: 1px;
+			-webkit-transform: translateY(25px);
+		}
+		
+		&:nth-child(2) {
+			width: 100%;
+			height: 1px;
+			-webkit-transform: rotateY(90deg) translateY(25px);
+		}
+		
+		&:nth-child(3) {
+			width: 1px;
+			height: 100%;
+			-webkit-transform: translateX(25px);
+			
+			span {
+				top: -@size;
+				left: -(@size - 1)/2;
+			}
+		}		
+	}
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang = 'en' ng-app = "MakerCreatorStudio">
+	
+	<head>
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		
+		<link rel="stylesheet" href="css/style.css">
+
+		<title>MakerJS Creator Studio</title>
+		
+	</head>
+
+	<body ng-controller = "MainCtrl">
+		
+		<div ng-include = "'partials/controls.html'"/></div>
+		
+		<div id = 'canvas'>
+			<make-shape controls = "controls" select = 'select(shape)' shape = 'shape' ng-repeat = 'shape in shapes'></make-shape>
+			
+			<make-compass controls = "controls"></make-compass>
+		</div>
+		
+		<script type = 'text/javascript' src = 'lib/angular/angular.min.js'></script>
+		<script type = 'text/javascript' src = 'lib/angular/module/maker/maker.js'></script>
+		<script type = 'text/javascript' src = 'js/script.js'></script>
+		
+		<script type="text/javascript">
+	
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-20130236-1']);
+		  _gaq.push(['_trackPageview']);
+		
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		
+		</script>
+		
+	</body>
+	
+</html>
